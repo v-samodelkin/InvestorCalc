@@ -12,6 +12,7 @@ class BaseStrategy(ABC):
     strategy_name: Strategies
     storage: DataStorage
     total_days: int
+    ticker: str
 
     def load(self, first: datetime.date = None, last: datetime.date = None):
         if (

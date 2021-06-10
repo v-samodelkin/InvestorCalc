@@ -144,7 +144,7 @@ class DataStorage:
                     self.indexes_tickers.append(ticker)
 
                 index = self.get_atom_index(date)
-                self.atoms[index].quotation[ticker] = value
+                self.atoms[index].external_quotation[ticker] = value
 
     def read_gdax_single(self, ticker: Tickers, filename: str) -> (
     datetime.datetime, datetime.datetime):

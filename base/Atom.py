@@ -9,12 +9,14 @@ class Atom:
     strategies: Dict[Strategies, StrategyData]
     additional: Dict[AdditionalTickers, float]
     quotation: Dict[Tickers, float]
+    external_quotation: Dict[str, float]
     inflation: float
 
     def __init__(self):
         self.strategies = {}
         self.additional = {}
         self.quotation = {}
+        self.external_quotation = {}
         self.inflation = 1.0
 
     def get_strategy(self, strategy: Strategies) -> StrategyData:

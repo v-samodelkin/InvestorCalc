@@ -12,7 +12,7 @@ class Strategies(Enum):
     miner_eth = "Miner ETH"
     miner_once_eth = "Miner once ETH"
     miner_cards_eth = "Miner cards ETH"
-    slow_indexes_buyer = "Slow Indexes Buyer"
+    slow_index_buyer = "Slow Indexes Buyer"
 
 
 StrategiesHeaders: Dict[str, Strategies] = {
@@ -21,7 +21,7 @@ StrategiesHeaders: Dict[str, Strategies] = {
     '[ETH] Купили мощность разово': Strategies.miner_once_eth,
     '[ETH] Закупаем Асики/Видеокарты': Strategies.miner_cards_eth,
     '[BTC] Закупаем вечно': Strategies.slow_btc_buyer,
-    'Покупаем индекс': Strategies.slow_indexes_buyer,
+    'Покупаем индекс': Strategies.slow_index_buyer,
 }
 
 

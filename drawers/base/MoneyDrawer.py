@@ -164,14 +164,16 @@ class MoneyDrawer:
         graph = go.Scatter(x=days, y=cm, mode="lines", name="Лет*доллар вложено")
         fig.add_trace(graph, row=row, col=col)
 
-        graph = go.Scatter(x=days, y=[v.strategies[strategy.strategy_name].total_balance() + v.strategies[strategy.strategy_name].exit_tax
-                                      for v in atoms],
+        graph = go.Scatter(x=days, y=[
+            v.strategies[strategy.strategy_name].total_balance() + v.strategies[strategy.strategy_name].exit_tax
+            for v in atoms],
                            mode="lines",
                            name="Прибыль выхода")
         fig.add_trace(graph, row=row, col=col)
 
-        graph = go.Scatter(x=days, y=[v.strategies[strategy.strategy_name].total_revenue + v.strategies[strategy.strategy_name].total_minus()
-                                      for v in atoms],
+        graph = go.Scatter(x=days, y=[
+            v.strategies[strategy.strategy_name].total_revenue + v.strategies[strategy.strategy_name].total_minus()
+            for v in atoms],
                            mode="lines",
                            name="Прибыль чистая")
         fig.add_trace(graph, row=row, col=col)
@@ -200,9 +202,25 @@ class MoneyDrawer:
         graph = go.Scatter(x=days, y=[(0
                                        if abs(v.strategies[strategy.strategy_name].total_minus()) < EPS
                                        else - (
-                v.strategies[strategy.strategy_name].total_revenue + v.strategies[strategy.strategy_name].total_minus()) / v.strategies[
+                v.strategies[strategy.strategy_name].total_revenue + v.strategies[
+            strategy.strategy_name].total_minus()) / v.strategies[
                                                 strategy.strategy_name].total_minus())
                                       for v in atoms],
                            mode="lines",
                            name="Прибыль чистая")
         fig.add_trace(graph, row=row, col=col + 1)
+
+    def print_index_all(self, strategy: BaseStrategy, fig, row, col):
+        start_index, end_index = strategy.get_strategy_indexes()
+        atoms = self.storage.atoms[start_index:end_index]
+
+        values = [v.external_quotation[strategy.ticker] if strategy.ticker in v.external_quotation else None for v in atoms]
+        days = strategy.dates
+
+        graph = go.Scatter(x=days, y=[0 for i in range(len(days))],
+                           mode='lines',
+                           name='0')
+        fig.add_trace(graph, row=row, col=col)
+
+        graph = go.Scatter(x=days, y=values, mode="lines", name="Курс " + strategy.ticker)
+        fig.add_trace(graph, row=row, col=col)
