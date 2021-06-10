@@ -97,6 +97,8 @@ class MinerEth(DrawableStrategy):
         strategy.power_assets = -strategy.total_invested * self.exit_price
 
     def _draw(self, **kwargs):
+        if not self.isDrawRequired:
+            return
         if (
                 kwargs['skip'] is None
         ):

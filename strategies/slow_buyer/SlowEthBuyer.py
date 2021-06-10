@@ -53,6 +53,8 @@ class SlowEthBuyer(DrawableStrategy):
         strategy.crypto_assets = strategy.total_crypto_count * atoms[index].quotation[Tickers.eth_ticker]
 
     def _draw(self, **kwargs):
+        if not self.isDrawRequired:
+            return
         if (
                 kwargs['skip'] is None
         ):

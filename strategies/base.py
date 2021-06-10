@@ -13,6 +13,7 @@ class BaseStrategy(ABC):
     storage: DataStorage
     total_days: int
     ticker: str
+    isDrawRequired = True
 
     def load(self, first: datetime.date = None, last: datetime.date = None):
         if (

@@ -59,13 +59,15 @@ class TickerBuyer(DrawableStrategy):
         strategy = atoms[index].get_strategy(self.strategy_name)
         prev_strategy = atoms[index - 1].get_strategy(self.strategy_name)
 
-        strategy.crypto_count = self.daily_budget / atoms[index].external_quotation[self.ticker] * (1 - self.comission)
-        strategy.invested = -self.daily_budget
+        if self.ticker in atoms[index].external_quotation:
+            strategy.crypto_count = self.daily_budget / atoms[index].external_quotation[self.ticker] * (1 - self.comission)
+            strategy.invested = -self.daily_budget
 
         strategy.total_crypto_count = prev_strategy.total_crypto_count + strategy.crypto_count
         strategy.total_invested = prev_strategy.total_invested + strategy.invested
 
-        strategy.crypto_assets = strategy.total_crypto_count * atoms[index].external_quotation[self.ticker]
+        if self.ticker in atoms[index].external_quotation:
+            strategy.crypto_assets = strategy.total_crypto_count * atoms[index].external_quotation[self.ticker]
         balance = strategy.total_balance()
         strategy.exit_tax = -balance * self.tax if balance > 0 else 0
         strategy.iis_income = self.iis_daily_income
@@ -79,6 +81,8 @@ class TickerBuyer(DrawableStrategy):
         # self.indexes_rois[ticker] = roi_exit
 
     def _draw(self, **kwargs):
+        if not self.isDrawRequired:
+            return
         if (
                 kwargs['skip'] is None
         ):

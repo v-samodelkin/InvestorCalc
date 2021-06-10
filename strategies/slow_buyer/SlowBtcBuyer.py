@@ -53,6 +53,8 @@ class SlowBtcBuyer(DrawableStrategy):
         strategy.crypto_assets = strategy.total_crypto_count * atoms[index].quotation[Tickers.btc_ticker]
 
     def _draw(self, **kwargs):
+        if not self.isDrawRequired:
+            return
         if (
                 kwargs['skip'] is None
         ):

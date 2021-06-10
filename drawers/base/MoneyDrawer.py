@@ -209,18 +209,3 @@ class MoneyDrawer:
                            mode="lines",
                            name="Прибыль чистая")
         fig.add_trace(graph, row=row, col=col + 1)
-
-    def print_index_all(self, strategy: BaseStrategy, fig, row, col):
-        start_index, end_index = strategy.get_strategy_indexes()
-        atoms = self.storage.atoms[start_index:end_index]
-
-        values = [v.external_quotation[strategy.ticker] if strategy.ticker in v.external_quotation else None for v in atoms]
-        days = strategy.dates
-
-        graph = go.Scatter(x=days, y=[0 for i in range(len(days))],
-                           mode='lines',
-                           name='0')
-        fig.add_trace(graph, row=row, col=col)
-
-        graph = go.Scatter(x=days, y=values, mode="lines", name="Курс " + strategy.ticker)
-        fig.add_trace(graph, row=row, col=col)
